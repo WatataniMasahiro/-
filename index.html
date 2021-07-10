@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>i2c-VL53L0X</title>
+    <script src="https://r.chirimen.org/polyfill.js"></script>
+    <script src="https://r.chirimen.org/vl53l0x.js"></script>
+    <script src="node_modules/@chirimen-raspi/chirimen-driver-i2c-vl53l0x/VL53L0X.js"></script>
+    <script src="node_modules/@chirimen-raspi/polyfill/polyfill.js"></script>
+    <script src="./main.js" defer></script>
+    <style>
+      #ledView {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        background-color: black;
+      }
+    </style>
+  </head>
+
+  <body>
+      <script type="text/javascript">
+        function ONOFF(onoffs){
+          if(onoffs == 1){
+            document.getElementById("swich").innerHTML = "OFF";
+          }else{
+            document.getElementById("swich").innerHTML = "ON";
+          }
+        }
+
+        function moveplus(time){
+          movetime += time;
+          document.getElementById("move").innerHTML = movetime;
+        }
+
+        function moveminus(time){
+          if(movetime > time){
+            movetime -= time;
+          }else{
+            movetime = 0;
+          }
+          document.getElementById("move").innerHTML = movetime;
+        }
+
+        function restplus(time){
+          resttime += time;
+          document.getElementById("rest").innerHTML = resttime;
+        }
+
+        function restminus(time){
+          if(resttime > time){
+            resttime -= time;
+          }else{
+            resttime = 0;
+          }
+          document.getElementById("rest").innerHTML = resttime;
+        }
+
+        function reset(){
+          movetime = 2800;
+          document.getElementById("move").innerHTML = movetime;
+          resttime = 5000;
+          document.getElementById("rest").innerHTML = resttime;
+        }
+      </script>
+    <input type="button" onclick="onoffs = onoffs ? 0 : 1; ONOFF(onoffs)" value="ON/OFF"></input>
+    <p id="swich">OFF</p>
+    <div id="ledView"></div>
+    <table>
+      <tr>
+        <p id="head">VL53L0X</p>
+        <td>Distance [mm]</td>
+        <td id="dist"></td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <table>
+      <tr>
+        <td>roll time [ms]</td>
+        <td id="move"></td>
+      </tr>
+    </table>
+    <p></p>
+    <input type="button" onclick="moveplus(100)" value="+100ms"></input>
+    <input type="button" onclick="moveplus(1000)" value="+1000ms"></input>
+    <p></p>
+    <input type="button" onclick="moveminus(100)" value="-100ms"></input>
+    <input type="button" onclick="moveminus(1000)" value="-1000ms"></input>
+    <br>
+    <table>
+       <br>
+       <br>
+      <tr>
+        <td>rest time [ms]</td>
+        <td id="rest"></td>
+      </tr>
+    </table>
+    <p></p>
+    <input type="button" onclick="restplus(100)" value="+100ms"></input>
+    <input type="button" onclick="restplus(1000)" value="+1000ms"></input>
+    <p></p>
+    <input type="button" onclick="restminus(100)" value="-100ms"></input>
+    <input type="button" onclick="restminus(1000)" value="-1000ms"></input>
+    <br>
+    <tr>
+      <br>
+      <br>
+      <td>reset botton (roll time = 2800ms, rest time = 5000ms)</td>
+      <p><input type="button" onclick="reset()" value="reset"></input></p>
+    </tr>
+  </body>
+</html>
